@@ -6,12 +6,14 @@ import sys
 import os
 
 tmpdir = '/tmp/kibana/dashboards/'
+hostname = 'localhost'
+port = '9200'
 
 if not os.path.exists(tmpdir):
     os.makedirs(tmpdir)
 
 if len(sys.argv) == 2:
-    dashboard = requests.get('http://localhost:9200/.kibana/dashboard/'+ sys.argv[1] + '?pretty')
+    dashboard = requests.get('http://' + hostname + ':' + port + '/.kibana/dashboard/'+ sys.argv[1] + '?pretty')
     json_dashboard = dashboard.json()
 
     del json_dashboard['_index']
@@ -26,14 +28,14 @@ if len(sys.argv) == 2:
         json.dump(dashboards_exported, outfile, indent=2, sort_keys=True)
 else:
 
-    dashboards = requests.get('http://localhost:9200/.kibana/dashboard/_search?pretty')
+    dashboards = requests.get('http://' + hostname + ':' + port + '/.kibana/dashboard/_search?pretty')
 
     json_dashboards = dashboards.json()
 
     for h in json_dashboards['hits']['hits']:
       print "%s" %h['_id']
 
-      dashboard = requests.get('http://localhost:9200/.kibana/dashboard/'+ h['_id'] + '?pretty')
+      dashboard = requests.get('http://' + hostname + ':' + port + '/.kibana/dashboard/'+ h['_id'] + '?pretty')
       json_dashboard = dashboard.json()
 
       del json_dashboard['_index']

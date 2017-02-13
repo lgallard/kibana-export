@@ -6,12 +6,14 @@ import sys
 import os
 
 tmpdir = '/tmp/kibana/searches/'
+hostname = 'localhost'
+port = '9200'
 
 if not os.path.exists(tmpdir):
     os.makedirs(tmpdir)
 
 if len(sys.argv) == 2:
-    search = requests.get('http://localhost:9200/.kibana/search/'+ sys.argv[1] + '?pretty')
+    search = requests.get('http://' + hostname + ':' + port + '/.kibana/search/'+ sys.argv[1] + '?pretty')
     json_search = search.json()
 
     del json_search['_index']
@@ -26,14 +28,14 @@ if len(sys.argv) == 2:
         json.dump(searches_exported, outfile, indent=2, sort_keys=True)
 else:
 
-    searches = requests.get('http://localhost:9200/.kibana/search/_search?pretty')
+    searches = requests.get('http://' + hostname + ':' + port + '/.kibana/search/_search?pretty')
 
     json_searches = searches.json()
 
     for h in json_searches['hits']['hits']:
       print "%s" %h['_id']
 
-      search = requests.get('http://localhost:9200/.kibana/search/'+ h['_id'] + '?pretty')
+      search = requests.get('http://' + hostname + ':' + port + '/.kibana/search/'+ h['_id'] + '?pretty')
       json_search = search.json()
 
       del json_search['_index']

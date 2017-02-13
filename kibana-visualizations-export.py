@@ -6,12 +6,14 @@ import sys
 import os
 
 tmpdir = '/tmp/kibana/visualizations/'
+hostname = 'localhost'
+port = '9200'
 
 if not os.path.exists(tmpdir):
     os.makedirs(tmpdir)
 
 if len(sys.argv) == 2:
-    visualization = requests.get('http://localhost:9200/.kibana/visualization/'+ sys.argv[1] + '?pretty')
+    visualization = requests.get('http://' + hostname + ':' + port + '/.kibana/visualization/'+ sys.argv[1] + '?pretty')
     json_visualization = visualization.json()
 
     del json_visualization['_index']
@@ -26,14 +28,14 @@ if len(sys.argv) == 2:
         json.dump(visualizations_exported, outfile, indent=2, sort_keys=True)
 else:
 
-    visualizations = requests.get('http://localhost:9200/.kibana/visualization/_search?pretty')
+    visualizations = requests.get('http://' + hostname + ':' + port + '/.kibana/visualization/_search?pretty')
 
     json_visualizations = visualizations.json()
 
     for h in json_visualizations['hits']['hits']:
       print "%s" %h['_id']
 
-      visualization = requests.get('http://localhost:9200/.kibana/visualization/'+ h['_id'] + '?pretty')
+      visualization = requests.get('http://' + hostname + ':' + port + '/.kibana/visualization/'+ h['_id'] + '?pretty')
       json_visualization = visualization.json()
 
       del json_visualization['_index']

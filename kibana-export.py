@@ -8,6 +8,8 @@ import os
 objects = ['dashboard', 'visualization', 'search']
 
 tmpdir='/tmp/kibana/'
+hostname = 'localhost'
+port = '9200'
 
 for object in objects:
 
@@ -19,16 +21,14 @@ for object in objects:
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    #print 'http://localhost:9200/.kibana/' + object + '/_search?pretty'
-
-    r = requests.get('http://localhost:9200/.kibana/' + object + '/_search?pretty')
+    r = requests.get('http://' + hostname + ':' + port + '/.kibana/' + object + '/_search?pretty')
 
     json_r = r.json()
 
     for h in json_r['hits']['hits']:
       #print "%s" %h['_id']
 
-      obj  = requests.get('http://localhost:9200/.kibana/' + object + '/'+ h['_id'] + '?pretty')
+      obj  = requests.get('http://' + hostname + ':' + port + '/.kibana/' + object + '/'+ h['_id'] + '?pretty')
       json_obj = obj.json()
 
       del json_obj['_index']
