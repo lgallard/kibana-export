@@ -8,7 +8,7 @@ Collection of scripts for exporting Kibana dashboards, visualizations and search
 
 This scripts export all dashboards, visualizations and searches from localhost to the /tmp/kibana directory
 
-*Usage:*
+**Usage:**
 
 ```
 python kibana-export.py
@@ -18,7 +18,7 @@ python kibana-export.py
 
 This scripts export all dashboards from localhost to the /tmp/kibana/dashboards directory. You can also export just a dashboard if the dashboard name is given.
 
-*Usage:*
+**Usage:**
 
 ```
 python kibana-dashboards-export.py
@@ -32,7 +32,7 @@ python kibana-dashboards-export.py dashboard-name
 
 This scripts export all visualizations from localhost to the /tmp/kibana/visualizations directory. You can also export just a visualization if the visualization name is given.
 
-*Usage:*
+**Usage:**
 
 ```
 python kibana-visualizations-export.py
@@ -48,7 +48,7 @@ python kibana-visualizations-export.py visualization-name
 
 This scripts export all searches from localhost to the /tmp/kibana/searches directory. You can also export just a search if the searches name is given.
 
-*Usage:*
+**Usage:**
 
 ```
 python kibana-searches-export.py
